@@ -19,8 +19,7 @@ iTern)      cd ~/Downloads/
             exit
             ;;
 Tunnelblick)    cd ~/Downloads/
-                tu=$(curl -L https://tunnelblick.net/release/Latest_Tunnelblick_Stable.dmg)
-                curl $tu -o tunnelblick.dmg
+                curl -L https://tunnelblick.net/release/Latest_Tunnelblick_Stable.dmg -o tunnelblick.dmg
                 hdiutil attach tunnelblick.dmg
                 rm -rf tunnelblick.dmg ~/Applications/Tunnelblick
                 cp /Volumes/Tunnelblick/Tunnelblick.app/ ~/Applications/
