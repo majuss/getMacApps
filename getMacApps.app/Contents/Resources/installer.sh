@@ -1,16 +1,18 @@
 #!/bin/bash
 
+cd ~/Downloads/
+
 case "$1" in
 
-Mactracker) cd ~/Downloads/
-            mt=$(curl http://mactracker.ca/ | grep "Standalone" | grep -o '".*"' | sed s/\"//g)
+Mactracker)
+            mt=$(curl https://mactracker.ca/ | grep "Standalone" | grep -o '".*"' | sed s/\"//g)
             curl $mt -o mactracker.zip
             unzip mactracker.zip
             rm -rf __MACOSX mactracker.zip ~/Applications/Mactracker.app
             mv -f Mactracker.app ~/Applications/
             exit
             ;;
-iTern)      cd ~/Downloads/
+iTern)
             it=$(curl https://www.iterm2.com/downloads.html | grep stable | head -1 | sed 's/^.*\(href=\".*\"><img\).*$/\1/' | grep -o '".*"' | sed s/\"//g)
             curl $it -o iterm.zip
             unzip iterm.zip
@@ -18,7 +20,7 @@ iTern)      cd ~/Downloads/
             mv iTerm.app ~/Applications/
             exit
             ;;
-Tunnelblick)    cd ~/Downloads/
+Tunnelblick)
                 curl -L https://tunnelblick.net/release/Latest_Tunnelblick_Stable.dmg -o tunnelblick.dmg
                 hdiutil attach tunnelblick.dmg
                 rm -rf tunnelblick.dmg ~/Applications/Tunnelblick
@@ -26,7 +28,7 @@ Tunnelblick)    cd ~/Downloads/
                 hdiutil detach /Volumes/Tunnelblick
                 exit
                 ;;
-Forklift)   cd ~/Downloads/
+Forklift)
             fl=$(curl https://binarynights.com/ | grep .zip | sed 's/^.*\(href=\".*\" class=\).*$/\1/' | grep -o '".*"' | sed s/\"//g)
             curl $fl -o forklift.zip
             unzip forklift.zip
@@ -34,7 +36,7 @@ Forklift)   cd ~/Downloads/
             mv Forklift.app ~/Applications/
             exit
             ;;
-MyTouchBarMyRules)  cd ~/Downloads/
+MyTouchBarMyRules)
                     mt=$(curl https://github.com/Toxblh/MTMR/releases | grep .dmg | head -1 | sed 's/^.*\(href=\".*dmg\"\).*$/\1/' | grep -o '".*"' | sed s/\"//g)
                     mt="https://github.com$mt"
                     curl -L $mt -o mytmr.dmg
@@ -44,7 +46,7 @@ MyTouchBarMyRules)  cd ~/Downloads/
                     hdiutil detach /Volumes/MTMR
                     exit
                     ;;
-HWMonitor)  cd ~/Downloads/
+HWMonitor)
             hw=$(curl https://github.com/kozlek/HWSensors/releases | grep .dmg | head -1 | sed 's/^.*\(href=\".*dmg.zip\"\).*$/\1/' | grep -o '".*"' | sed s/\"//g)
             hw="https://github.com$hw"
             curl -L $hw -o hwsensors.zip
@@ -61,13 +63,35 @@ HWMonitor)  cd ~/Downloads/
             hdiutil detach "$vol2"
             exit
             ;;
-mpv)    cd ~/Downloads/
+mpv)
         mpv=$(curl -L https://laboratory.stolendata.net/~djinn/mpv_osx/mpv-latest.tar.gz -o mpv.tar.gz)
         tar -xzf mpv.tar.gz
         rm -rf mpv.tar.gz ~/Applications/mpv.app
         mv mpv.app ~/Applications/mpv.app
         exit
         ;;
+
+GoogleChrome)
+        curl -L "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg" -o chrome.dmg
+        hdiutil attach "chrome.dmg"
+        rm -rf "chrome.dmg" "~/Applications/Google Chrome.app"
+        cp -r "/Volumes/Google Chrome/Google Chrome.app" ~/Applications/
+        hdiutil detach "/Volumes/Google Chrome"
+        exit
+        ;;
+
+nightlyVLC)
+        vlc=$(curl "https://nightlies.videolan.org/build/macosx-intel/last/"|grep \.dmg | grep -oE 'href\=\"([^\"]*)'|cut -c 7-)
+        curl -L "https://nightlies.videolan.org/build/macosx-intel/last/$vlc" -o vlc.dmg
+
+        hdiutil attach "vlc.dmg"
+        rm -rf "vlc.dmg" "~/Applications/vlc-nightly.app"
+        mkdir ~/Applications/vlc-nightly.app
+        cp -r "/Volumes/VLC Media Player"/VLC.app/* ~/Applications/vlc-nightly.app/
+        hdiutil detach "/Volumes/VLC Media Player"
+        exit
+        ;;
+
 *) echo "ERROR"
    ;;
 esac
