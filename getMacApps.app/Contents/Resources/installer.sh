@@ -74,7 +74,7 @@ mpv)
 GoogleChrome)
         curl -L "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg" -o chrome.dmg
         hdiutil attach "chrome.dmg"
-        rm -rf "chrome.dmg" "~/Applications/Google Chrome.app"
+        rm -rf "chrome.dmg" ~/Applications/Google\ Chrome.app
         cp -r "/Volumes/Google Chrome/Google Chrome.app" ~/Applications/
         hdiutil detach "/Volumes/Google Chrome"
         exit
@@ -89,6 +89,14 @@ nightlyVLC)
         mkdir ~/Applications/vlc-nightly.app
         cp -r "/Volumes/VLC Media Player"/VLC.app/* ~/Applications/vlc-nightly.app/
         hdiutil detach "/Volumes/VLC Media Player"
+        exit
+        ;;
+
+VisualStudioCode)
+        curl -L "https://go.microsoft.com/fwlink/?LinkID=620882" -o visual-studio-code-stable.zip
+        unzip visual-studio-code-stable.zip
+        rm -rf visual-studio-code-stable.zip ~/Applications/Visual\ Studio\ Code.app
+        mv "Visual Studio Code.app" ~/Applications/
         exit
         ;;
 
