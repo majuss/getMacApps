@@ -12,7 +12,7 @@ Mactracker)
             mv -f Mactracker.app ~/Applications/
             exit
             ;;
-iTern)
+iTerm)
             it=$(curl https://www.iterm2.com/downloads.html | grep stable | head -1 | sed 's/^.*\(href=\".*\"><img\).*$/\1/' | grep -o '".*"' | sed s/\"//g)
             curl $it -o iterm.zip
             unzip iterm.zip
